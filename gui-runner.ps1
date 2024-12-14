@@ -27,8 +27,7 @@ function Execute-Script ($ScriptName) {
 }
 
 # Main Menu Loop
-$continue = $true
-while ($continue) {
+while ($true) {
     Show-Menu
     $choice = Read-Host "Choose a menu option using your keyboard [1,2,3,4,5,6,0]"
 
@@ -41,7 +40,7 @@ while ($continue) {
         6 { Execute-Script "PostRestartWSL.ps1" }
         0 { 
             Write-Host "Exiting..." -ForegroundColor Red
-            $continue = $false
+            exit
         }
         default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
     }
