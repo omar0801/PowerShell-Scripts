@@ -11,53 +11,165 @@ function Show-Menu {
     Write-Host "==============================================" -ForegroundColor Green
 }
 
-# Function to Display the WSL Menu
-function Show-WSLMenu {
+# Function to Display the Package Management Menu
+function Show-PackageMenu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "               WSL Configuration Menu:        " -ForegroundColor Cyan
+    Write-Host "              Package Management:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Enable WSL" -ForegroundColor Blue
-    Write-Host "[2] Post-Restart Configuration" -ForegroundColor Yellow
-    Write-Host "[3] Uninstall WSL" -ForegroundColor Cyan
-    Write-Host "[0] Back to Main Menu" -ForegroundColor Red
+    Write-Host "[1] Development Tools" -ForegroundColor Blue
+    Write-Host "[2] System Monitoring Tools" -ForegroundColor Yellow
+    Write-Host "[3] Communication and Gaming" -ForegroundColor Cyan
+    Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
-# Functions for WSL Options
-function Enable-WSL {
-    Write-Host "Running Enable WSL Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/EnableWSL.ps1" | iex
+# Function to Display Development Tools Menu
+function Show-DevelopmentToolsMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "              Development Tools:               " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] Python"
+    Write-Host "[2] Git"
+    Write-Host "[3] Make"
+    Write-Host "[4] VSCode"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
 }
 
-function Post-RestartWSL {
-    Write-Host "Running Post-Restart Configuration Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/PostRestartWSL.ps1" | iex
+# Function to Display System Monitoring Tools Menu
+function Show-SystemMonitoringMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "         System Monitoring Tools:              " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] HWiNFO"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
 }
 
-function Uninstall-WSL {
-    Write-Host "Running Uninstall WSL Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/UninstallWSL.ps1" | iex
+# Function to Display Communication and Gaming Menu
+function Show-CommunicationGamingMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "        Communication and Gaming:              " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] Discord"
+    Write-Host "[2] Steam"
+    Write-Host "[3] Valorant"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
 }
 
-# WSL Menu Logic
-function Run-WSLConfiguration {
+# Logic for Development Tools Menu
+function Run-DevelopmentTools {
     do {
-        Show-WSLMenu
-        $wslSelection = Read-Host "Please select an option"
-        
-        switch ($wslSelection) {
+        Show-DevelopmentToolsMenu
+        $selection = Read-Host "Please select an option"
+        switch ($selection) {
             1 {
-                Enable-WSL
+                Write-Host "Installing Python..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/installs/python.ps1" | iex
                 Pause
             }
             2 {
-                Post-RestartWSL
+                Write-Host "Installing Git..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/installs/git.ps1" | iex
                 Pause
             }
             3 {
-                Uninstall-WSL
+                Write-Host "Installing Make..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/make.ps1" | iex
                 Pause
+            }
+            4 {
+                Write-Host "Installing VSCode..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/vscode.ps1" | iex
+                Pause
+            }
+            0 {
+                Write-Host "Returning to Package Management Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($selection -ne 0)
+}
+
+# Logic for System Monitoring Tools Menu
+function Run-SystemMonitoring {
+    do {
+        Show-SystemMonitoringMenu
+        $selection = Read-Host "Please select an option"
+        switch ($selection) {
+            1 {
+                Write-Host "Installing HWiNFO..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/hwinfo.ps1" | iex
+                Pause
+            }
+            0 {
+                Write-Host "Returning to Package Management Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($selection -ne 0)
+}
+
+# Logic for Communication and Gaming Menu
+function Run-CommunicationGaming {
+    do {
+        Show-CommunicationGamingMenu
+        $selection = Read-Host "Please select an option"
+        switch ($selection) {
+            1 {
+                Write-Host "Installing Discord..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/discord.ps1" | iex
+                Pause
+            }
+            2 {
+                Write-Host "Installing Steam..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/steam.ps1" | iex
+                Pause
+            }
+            3 {
+                Write-Host "Installing Valorant..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/valorant.ps1" | iex
+                Pause
+            }
+            0 {
+                Write-Host "Returning to Package Management Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($selection -ne 0)
+}
+
+# Logic for Package Management Menu
+function Run-PackageManagement {
+    do {
+        Show-PackageMenu
+        $selection = Read-Host "Please select an option"
+        switch ($selection) {
+            1 {
+                Run-DevelopmentTools
+            }
+            2 {
+                Run-SystemMonitoring
+            }
+            3 {
+                Run-CommunicationGaming
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
@@ -68,36 +180,28 @@ function Run-WSLConfiguration {
                 Pause
             }
         }
-    } while ($wslSelection -ne 0)
+    } while ($selection -ne 0)
 }
 
-# Placeholder Functions for Other Menus
-function Run-PackageManagement {
-    Write-Host "You selected 'Package Management'." -ForegroundColor Cyan
-    # Add logic to fetch and execute scripts for package management
-}
-
+# Logic for Windows Configurations
 function Run-WindowsConfigurations {
-    Write-Host "You selected 'Windows Configurations'." -ForegroundColor Cyan
-    # Add logic to fetch and execute scripts for Windows configurations
+    Write-Host "Running Windows Configurations..." -ForegroundColor Cyan
+    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/microsoft/Windows.ps1" | iex
 }
 
 # Main Menu Logic
 do {
     Show-Menu
     $selection = Read-Host "Please select an option"
-    
     switch ($selection) {
         1 {
             Run-PackageManagement
-            Pause
         }
         2 {
             Run-WSLConfiguration
         }
         3 {
             Run-WindowsConfigurations
-            Pause
         }
         0 {
             Write-Host "Exiting... Goodbye!" -ForegroundColor Red
