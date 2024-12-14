@@ -22,7 +22,7 @@ function Execute-Script ($ScriptName) {
         Invoke-RestMethod -Uri $ScriptURL -OutFile "$env:TEMP\$ScriptName"
         PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\$ScriptName"
     } catch {
-        Write-Host "Error executing script "$ScriptName": $($_)" -ForegroundColor Red
+        Write-Host "Error executing script `"$ScriptName`": $($_)" -ForegroundColor Red
     }
 }
 
@@ -38,10 +38,7 @@ while ($true) {
         4 { Execute-Script "EnableWSL.ps1" }
         5 { Execute-Script "installs.ps1" }
         6 { Execute-Script "PostRestartWSL.ps1" }
-        0 { 
-            Write-Host "Exiting..." -ForegroundColor Red
-            exit
-        }
+        0 { Write-Host "Exiting..." -ForegroundColor Red; break }
         default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
     }
     Start-Sleep -Seconds 2
