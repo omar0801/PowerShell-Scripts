@@ -1,4 +1,4 @@
-﻿# Default Chocolatey Installer Script
+# Default Chocolatey Installer Script
 
 # Function to check if Chocolatey is installed
 function Check-Chocolatey {
