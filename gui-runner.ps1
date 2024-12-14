@@ -17,14 +17,13 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1] Install Python"
     Write-Host "[2] Install Git"
-    Write-Host "[3] Install Chocolatey"
-    Write-Host "[4] Install make"
-    Write-Host "[5] Install VSCode"
-    Write-Host "[6] Install HWiNFO"
-    Write-Host "[7] Install Discord"
-    Write-Host "[8] Install Steam"
-    Write-Host "[9] Install Valorant"
-    Write-Host "[10] Install Windscribe"
+    Write-Host "[3] Install make"
+    Write-Host "[4] Install VSCode"
+    Write-Host "[5] Install HWiNFO"
+    Write-Host "[6] Install Discord"
+    Write-Host "[7] Install Steam"
+    Write-Host "[8] Install Valorant"
+    Write-Host "[9] Install Windscribe"
     Write-Host "[0] Go Back"
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -54,19 +53,6 @@ function Install-Package {
     }
 }
 
-function Execute-Script ($ScriptName) {
-    $RepoBaseURL = "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main"
-    $ScriptURL = "$RepoBaseURL/$ScriptName"
-
-    try {
-        Write-Host "Downloading and executing $ScriptName..." -ForegroundColor Yellow
-        Invoke-WebRequest -Uri $ScriptURL -OutFile "$env:TEMP\\$ScriptName" -ErrorAction Stop
-        & PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\\$ScriptName"
-    } catch {
-        Write-Host "Error executing script `"$ScriptName`": $($_.Exception.Message)" -ForegroundColor Red
-    }
-}
-
 # Main Menu Logic
 while ($true) {
     Show-Menu
@@ -78,19 +64,18 @@ while ($true) {
             $inPackageMenu = $true
             while ($inPackageMenu) {
                 Show-PackageMenu
-                $packageChoice = Read-Host "Choose a package to install using your keyboard [1-10,0]"
+                $packageChoice = Read-Host "Choose a package to install using your keyboard [1-9,0]"
 
                 switch ($packageChoice) {
                     1 { Install-Package "Python" }
                     2 { Install-Package "Git" }
-                    3 { Install-Package "Chocolatey" }
-                    4 { Install-Package "make" }
-                    5 { Install-Package "VSCode" }
-                    6 { Install-Package "HWiNFO" }
-                    7 { Install-Package "Discord" }
-                    8 { Install-Package "Steam" }
-                    9 { Install-Package "Valorant" }
-                    10 { Install-Package "Windscribe" }
+                    3 { Install-Package "make" }
+                    4 { Install-Package "VSCode" }
+                    5 { Install-Package "HWiNFO" }
+                    6 { Install-Package "Discord" }
+                    7 { Install-Package "Steam" }
+                    8 { Install-Package "Valorant" }
+                    9 { Install-Package "Windscribe" }
                     0 { $inPackageMenu = $false }  # Exit Package Management submenu
                     default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
                 }
