@@ -1,6 +1,4 @@
-﻿Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-
-# Function to prompt for installation
+﻿# Function to prompt for installation
 function Prompt-Install {
     param (
         [string]$SoftwareName
