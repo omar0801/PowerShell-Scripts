@@ -22,7 +22,7 @@ function Execute-Script ($ScriptName) {
         Invoke-RestMethod -Uri $ScriptURL -OutFile "$env:TEMP\$ScriptName"
         PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\$ScriptName"
     } catch {
-        Write-Host "Error executing $ScriptName: $_" -ForegroundColor Red
+        Write-Host "Error executing $ScriptName: $($_)" -ForegroundColor Red
     }
 }
 
