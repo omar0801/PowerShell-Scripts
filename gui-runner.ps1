@@ -29,34 +29,24 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
 }
 
-function Install-Package ($PackageName, $ScriptName) {
-    Write-Host "Installing $PackageName..."
-    Execute-Script $ScriptName
-}
+# Executes the install.ps1 script with a specified package name
+function Install-Package ($PackageName) {
+    $ScriptPath = "$env:TEMP\\installs.ps1"
+    $RepoBaseURL = "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main"
+    $ScriptURL = "$RepoBaseURL/installs.ps1"
 
-function Handle-PackageManagement {
-    $inPackageMenu = $true
-    while ($inPackageMenu) {
-        Show-PackageMenu
-        $packageChoice = Read-Host "Choose a package to install using your keyboard [1-10,0]"
-
-        switch ($packageChoice) {
-            1 { Install-Package "Python" "installs.ps1" }
-            2 { Install-Package "Git" "installs.ps1" }
-            3 { Install-Package "Chocolatey" "installs.ps1" }
-            4 { Install-Package "make" "installs.ps1" }
-            5 { Install-Package "VSCode" "installs.ps1" }
-            6 { Install-Package "HWiNFO" "installs.ps1" }
-            7 { Install-Package "Discord" "installs.ps1" }
-            8 { Install-Package "Steam" "installs.ps1" }
-            9 { Install-Package "Valorant" "installs.ps1" }
-            10 { Install-Package "Windscribe" "installs.ps1" }
-            0 { $inPackageMenu = $false }  # Exit Package Management submenu
-            default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
-        }
+    # Download the script if it doesn't exist locally
+    if (-not (Test-Path $ScriptPath)) {
+        Write-Host "Downloading installs.ps1..." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri $ScriptURL -OutFile $ScriptPath -ErrorAction Stop
     }
+
+    # Run the script with the specified package name
+    Write-Host "Executing installs.ps1 for $PackageName..." -ForegroundColor Cyan
+    PowerShell -ExecutionPolicy Bypass -File $ScriptPath -PackageName $PackageName
 }
 
+# WSL Options Menu
 function Show-WSLMenu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
@@ -72,22 +62,45 @@ function Show-WSLMenu {
 function Execute-Script ($ScriptName) {
     $RepoBaseURL = "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main"
     $ScriptURL = "$RepoBaseURL/$ScriptName"
+
     try {
-        Write-Host "Executing $ScriptName..." -ForegroundColor Yellow
-        Invoke-RestMethod -Uri $ScriptURL -OutFile "$env:TEMP\$ScriptName"
-        PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\$ScriptName"
+        Write-Host "Downloading and executing $ScriptName..." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri $ScriptURL -OutFile "$env:TEMP\\$ScriptName"
+        PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\\$ScriptName"
     } catch {
         Write-Host "Error executing script `"$ScriptName`": $($_)" -ForegroundColor Red
     }
 }
 
-# Main Menu Loop
+# Main Menu Logic
 while ($true) {
     Show-Menu
     $choice = Read-Host "Choose a menu option using your keyboard [1,2,3,0]"
 
     switch ($choice) {
-        1 { Handle-PackageManagement }
+        1 {
+            # Package Management Submenu
+            $inPackageMenu = $true
+            while ($inPackageMenu) {
+                Show-PackageMenu
+                $packageChoice = Read-Host "Choose a package to install using your keyboard [1-10,0]"
+
+                switch ($packageChoice) {
+                    1 { Install-Package "Python" }
+                    2 { Install-Package "Git" }
+                    3 { Install-Package "Chocolatey" }
+                    4 { Install-Package "make" }
+                    5 { Install-Package "VSCode" }
+                    6 { Install-Package "HWiNFO" }
+                    7 { Install-Package "Discord" }
+                    8 { Install-Package "Steam" }
+                    9 { Install-Package "Valorant" }
+                    10 { Install-Package "Windscribe" }
+                    0 { $inPackageMenu = $false }  # Exit Package Management submenu
+                    default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
+                }
+            }
+        }
         2 {
             # WSL Submenu
             $inWSLMenu = $true
