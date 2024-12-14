@@ -1,17 +1,3 @@
-# Function to check if Python is already installed
-function Check-Python {
-    Write-Host "Checking if Python is installed..."
-    $pythonExe = Get-Command python -ErrorAction SilentlyContinue
-    if ($pythonExe) {
-        $pythonVersion = & python --version 2>&1
-        Write-Host "Python is already installed: $pythonVersion"
-        return $true
-    } else {
-        Write-Host "Python is not installed."
-        return $false
-    }
-}
-
 # Function to install Python
 function Install-Python {
     if (Check-Python) {
