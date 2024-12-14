@@ -11,6 +11,9 @@ function Show-Menu {
     Write-Host "==============================================" -ForegroundColor Green
 }
 
+# ==========================================================
+# SECTION: WSL Menu
+# ==========================================================
 # Function to Display the WSL Menu
 function Show-WSLMenu {
     cls
@@ -71,6 +74,9 @@ function Run-WSLConfiguration {
     } while ($wslSelection -ne 0)
 }
 
+# ==========================================================
+# SECTION: Package Management Menu
+# ==========================================================
 # Function to Display the Package Management Menu
 function Show-PackageMenu {
     cls
@@ -84,6 +90,9 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
 }
 
+# ==========================================================
+# SECTION: Development Tools Menu
+# ==========================================================
 # Function to Display Development Tools Menu
 function Show-DevelopmentToolsMenu {
     cls
@@ -92,32 +101,9 @@ function Show-DevelopmentToolsMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1] Python"
     Write-Host "[2] Git"
-    Write-Host "[3] Make"
-    Write-Host "[4] VSCode"
-    Write-Host "[0] Go Back" -ForegroundColor Red
-    Write-Host "==============================================" -ForegroundColor Green
-}
-
-# Function to Display System Monitoring Tools Menu
-function Show-SystemMonitoringMenu {
-    cls
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "         System Monitoring Tools:              " -ForegroundColor Cyan
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] HWiNFO"
-    Write-Host "[0] Go Back" -ForegroundColor Red
-    Write-Host "==============================================" -ForegroundColor Green
-}
-
-# Function to Display Communication and Gaming Menu
-function Show-CommunicationGamingMenu {
-    cls
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "        Communication and Gaming:              " -ForegroundColor Cyan
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Discord"
-    Write-Host "[2] Steam"
-    Write-Host "[3] Valorant"
+    Write-Host "[3] VSCode"
+    Write-Host "[4] Make"
+    Write-Host "[5] Tree"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -139,13 +125,18 @@ function Run-DevelopmentTools {
                 Pause
             }
             3 {
+                Write-Host "Installing Vscode..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/vscode.ps1" | iex
+                Pause
+            }
+            4 {
                 Write-Host "Installing Make..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/make.ps1" | iex
                 Pause
             }
-            4 {
-                Write-Host "Installing VSCode..."
-                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/vscode.ps1" | iex
+            5 {
+                Write-Host "Installing Tree..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/tree.ps1" | iex
                 Pause
             }
             0 {
@@ -160,6 +151,24 @@ function Run-DevelopmentTools {
     } while ($selection -ne 0)
 }
 
+# ==========================================================
+# SECTION: System Monitoring Tools Menu
+# ==========================================================
+# Function to Display System Monitoring Tools Menu
+function Show-SystemMonitoringMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "         System Monitoring Tools:              " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] HWiNFO"
+    Write-Host "[2] CPU-Z"
+    Write-Host "[3] GPU-Z"
+    Write-Host "[4] Core Temp"
+    Write-Host "[5] Speccy"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
+}
+
 # Logic for System Monitoring Tools Menu
 function Run-SystemMonitoring {
     do {
@@ -169,6 +178,21 @@ function Run-SystemMonitoring {
             1 {
                 Write-Host "Installing HWiNFO..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/hwinfo.ps1" | iex
+                Pause
+            }
+            2 {
+                Write-Host "Installing CPU-Z..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/cpu-z.ps1" | iex
+                Pause
+            }
+            3 {
+                Write-Host "Installing GPU-Z..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/gpu-z.ps1" | iex
+                Pause
+            }
+            4 {
+                Write-Host "Installing Core Temp..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/coretemp.ps1" | iex
                 Pause
             }
             0 {
@@ -181,6 +205,22 @@ function Run-SystemMonitoring {
             }
         }
     } while ($selection -ne 0)
+}
+
+# ==========================================================
+# SECTION: Communication and Gaming Menu
+# ==========================================================
+# Function to Display Communication and Gaming Menu
+function Show-CommunicationGamingMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "        Communication and Gaming:              " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] Discord"
+    Write-Host "[2] Steam"
+    Write-Host "[3] Valorant"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
 }
 
 # Logic for Communication and Gaming Menu
@@ -216,40 +256,17 @@ function Run-CommunicationGaming {
     } while ($selection -ne 0)
 }
 
-# Logic for Package Management Menu
-function Run-PackageManagement {
-    do {
-        Show-PackageMenu
-        $selection = Read-Host "Please select an option"
-        switch ($selection) {
-            1 {
-                Run-DevelopmentTools
-            }
-            2 {
-                Run-SystemMonitoring
-            }
-            3 {
-                Run-CommunicationGaming
-            }
-            0 {
-                Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
-                break
-            }
-            default {
-                Write-Host "Invalid selection, please try again." -ForegroundColor Red
-                Pause
-            }
-        }
-    } while ($selection -ne 0)
-}
-
-# Logic for Windows Configurations
+# ==========================================================
+# SECTION: Windows Configurations
+# ==========================================================
 function Run-WindowsConfigurations {
     Write-Host "Running Windows Configurations..." -ForegroundColor Cyan
     irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/microsoft/Windows.ps1" | iex
 }
 
-# Main Menu Logic
+# ==========================================================
+# SECTION: Main Menu Logic
+# ==========================================================
 do {
     Show-Menu
     $selection = Read-Host "Please select an option"
