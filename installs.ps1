@@ -1,4 +1,4 @@
-﻿function Prompt-Install {
+function Prompt-Install {
     param (
         [string]$SoftwareName
     )
