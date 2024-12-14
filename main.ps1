@@ -91,6 +91,35 @@ function Show-PackageMenu {
 }
 
 # ==========================================================
+# SECTION: Package Management Logic
+# ==========================================================
+function Run-PackageManagement {
+    do {
+        Show-PackageMenu
+        $packageSelection = Read-Host "Please select an option"
+        switch ($packageSelection) {
+            1 {
+                Run-DevelopmentTools
+            }
+            2 {
+                Run-SystemMonitoring
+            }
+            3 {
+                Run-CommunicationGaming
+            }
+            0 {
+                Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($packageSelection -ne 0)
+}
+
+# ==========================================================
 # SECTION: Development Tools Menu
 # ==========================================================
 # Function to Display Development Tools Menu
