@@ -29,34 +29,29 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
 }
 
-# Executes the install.ps1 script with a specified package name
-function Install-Package ($PackageName) {
+# Executes the installs.ps1 script with the specified package name
+function Install-Package {
+    param (
+        [string]$PackageName
+    )
+
     $ScriptPath = "$env:TEMP\\installs.ps1"
     $RepoBaseURL = "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main"
     $ScriptURL = "$RepoBaseURL/installs.ps1"
 
-    # Download the script if it doesn't exist locally
-    if (-not (Test-Path $ScriptPath)) {
-        Write-Host "Downloading installs.ps1..." -ForegroundColor Yellow
-        Invoke-WebRequest -Uri $ScriptURL -OutFile $ScriptPath -ErrorAction Stop
+    try {
+        # Download the script if it doesn't exist locally or update it
+        if (-not (Test-Path $ScriptPath)) {
+            Write-Host "Downloading installs.ps1..." -ForegroundColor Yellow
+            Invoke-WebRequest -Uri $ScriptURL -OutFile $ScriptPath -ErrorAction Stop
+        }
+
+        # Ensure the script is executable
+        Write-Host "Running installs.ps1 for $PackageName..." -ForegroundColor Cyan
+        & PowerShell -ExecutionPolicy Bypass -File $ScriptPath -PackageName $PackageName
+    } catch {
+        Write-Host "Error executing installs.ps1: $($_.Exception.Message)" -ForegroundColor Red
     }
-
-    # Run the script with the specified package name
-    Write-Host "Executing installs.ps1 for $PackageName..." -ForegroundColor Cyan
-    PowerShell -ExecutionPolicy Bypass -File $ScriptPath -PackageName $PackageName
-}
-
-# WSL Options Menu
-function Show-WSLMenu {
-    cls
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "                 WSL Options:                 " -ForegroundColor Cyan
-    Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Enable WSL"
-    Write-Host "[2] Post-Restart Tasks for WSL"
-    Write-Host "[3] Uninstall WSL"
-    Write-Host "[0] Go Back"
-    Write-Host "==============================================" -ForegroundColor Green
 }
 
 function Execute-Script ($ScriptName) {
@@ -65,10 +60,10 @@ function Execute-Script ($ScriptName) {
 
     try {
         Write-Host "Downloading and executing $ScriptName..." -ForegroundColor Yellow
-        Invoke-WebRequest -Uri $ScriptURL -OutFile "$env:TEMP\\$ScriptName"
-        PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\\$ScriptName"
+        Invoke-WebRequest -Uri $ScriptURL -OutFile "$env:TEMP\\$ScriptName" -ErrorAction Stop
+        & PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\\$ScriptName"
     } catch {
-        Write-Host "Error executing script `"$ScriptName`": $($_)" -ForegroundColor Red
+        Write-Host "Error executing script `"$ScriptName`": $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
