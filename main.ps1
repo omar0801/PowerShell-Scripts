@@ -309,7 +309,7 @@ do {
             Run-WindowsConfigurations
         }
         0 {
-            Write-Host "Exiting... Goodbye!" -ForegroundColor Red
+            Write-Host "Exiting... Goodbye and shush!" -ForegroundColor Red
             break
         }
         default {
