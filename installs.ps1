@@ -1,16 +1,12 @@
-function Prompt-Install {
-    param (
-        [string]$SoftwareName
-    )
+param (
+    [string]$PackageName
+)
 
-    $response = Read-Host ("Do you want to install `"$SoftwareName`"? (yes/no)")
-    return $response -eq "yes"
-}
+# Function to install Python
+function Install-Python {
+    Write-Host "Installing Python..."
+    $pythonInstallerPath = "$env:TEMP\\python-installer.exe"
 
-$pythonInstallerPath = "$env:TEMP\python-installer.exe"
-$gitInstallerPath = "$env:TEMP\git-installer.exe"
-
-if (Prompt-Install -SoftwareName "Python") {
     Write-Host "Fetching the latest Python installer URL..."
     $pythonDownloadPage = Invoke-WebRequest -Uri "https://www.python.org/downloads/" -UseBasicParsing
     $pythonInstallerUrl = ($pythonDownloadPage.Links | Where-Object { $_.href -match "https://www.python.org/ftp/python/.+/python-.+-amd64.exe" }).href
@@ -37,9 +33,14 @@ if (Prompt-Install -SoftwareName "Python") {
     } else {
         Write-Host "Python installation failed. Python executable not found at $pythonExePath"
     }
+
+    if (Test-Path $pythonInstallerPath) { Remove-Item -Path $pythonInstallerPath -Force }
 }
 
-if (Prompt-Install -SoftwareName "Git") {
+# Function to install Git
+function Install-Git {
+    Write-Host "Installing Git..."
+    $gitInstallerPath = "$env:TEMP\\git-installer.exe"
 
     Write-Host "Fetching the latest Git installer URL..."
     $gitReleasesApi = "https://api.github.com/repos/git-for-windows/git/releases/latest"
@@ -55,76 +56,66 @@ if (Prompt-Install -SoftwareName "Git") {
     Write-Host "Downloading Git installer..."
     Invoke-WebRequest -Uri $gitInstallerUrl -OutFile $gitInstallerPath -UseBasicParsing
 
-
     Write-Host "Installing Git..."
     Start-Process -FilePath $gitInstallerPath -ArgumentList "/SILENT" -Wait
 
     Write-Host "Verifying Git installation..."
-    $gitExePath = "C:\Program Files\Git\cmd\git.exe"  
+    $gitExePath = "C:\Program Files\Git\cmd\git.exe"
     if (Test-Path $gitExePath) {
         $gitVersion = & $gitExePath --version 2>&1
         Write-Host "Git installed successfully: $gitVersion"
     } else {
         Write-Host "Git installation failed. Git executable not found at $gitExePath"
     }
+
+    if (Test-Path $gitInstallerPath) { Remove-Item -Path $gitInstallerPath -Force }
 }
 
-if (Prompt-Install -SoftwareName "Chocolatey") {
-
+# Function to install Chocolatey
+function Install-Chocolatey {
+    Write-Host "Installing Chocolatey..."
     if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-        Write-Host "Chocolatey not found. Installing Chocolatey..."
         Set-ExecutionPolicy Bypass -Scope Process -Force
         Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
         if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-            Write-Host "Chocolatey installation failed."
+            Write-Error "Chocolatey installation failed."
             exit 1
         }
     }
     Write-Host "Chocolatey installed successfully."
+}
 
-    function Install-Software {
-        param (
-            [string]$SoftwareName,
-            [string]$ChocoPackageName
-        )
+# Generic function to install packages via Chocolatey
+function Install-ChocoPackage {
+    param (
+        [string]$AppName,
+        [string]$ChocoPackageName
+    )
+    Write-Host "Installing $AppName via Chocolatey..."
+    choco install $ChocoPackageName -y
 
-        $response = Read-Host ("Do you want to install `"$SoftwareName`"? (yes/no)")
-        if ($response -eq "yes") {
-            Write-Host "Installing $SoftwareName using Chocolatey..."
-            choco install $ChocoPackageName -y
-
-            Write-Host "Verifying $SoftwareName installation..."
-            if (Get-Command $ChocoPackageName -ErrorAction SilentlyContinue) {
-                Write-Host "$SoftwareName installed successfully."
-            } else {
-                Write-Host "$SoftwareName installation failed."
-            }
-        } else {
-            Write-Host "$SoftwareName installation skipped."
-        }
+    Write-Host "Verifying $AppName installation..."
+    if (Get-Command $ChocoPackageName -ErrorAction SilentlyContinue) {
+        Write-Host "$AppName installed successfully."
+    } else {
+        Write-Host "$AppName installation failed."
     }
-
-    Install-Software -SoftwareName "make" -ChocoPackageName "make"
-    Install-Software -SoftwareName "vscode" -ChocoPackageName "vscode.install"
-    Install-Software -SoftwareName "HWiNFO" -ChocoPackageName "hwinfo.install"
-    Install-Software -SoftwareName "Discord" -ChocoPackageName "discord.install"
-    Install-Software -SoftwareName "Steam" -ChocoPackageName "steam"
-    Install-Software -SoftwareName "Valorant" -ChocoPackageName "valorant"
-    Install-Software -SoftwareName "windscribe" -ChocoPackageName "windscribe"
 }
 
-Write-Host "Updating PATH environment variable..."
-if ($pythonVersion) {
-    [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Program Files\Python$($pythonVersion.Split('.')[0])$($pythonVersion.Split('.')[1])\;C:\Program Files\Git\cmd\;C:\ProgramData\chocolatey\bin\", [System.EnvironmentVariableTarget]::Machine)
-} elseif (Test-Path "C:\Program Files\Git\cmd\") {
-    [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Program Files\Git\cmd\;C:\ProgramData\chocolatey\bin\", [System.EnvironmentVariableTarget]::Machine)
-} else {
-    [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\ProgramData\chocolatey\bin\", [System.EnvironmentVariableTarget]::Machine)
+# Main Logic: Handle $PackageName Parameter
+switch ($PackageName) {
+    "Python"        { Install-Python }
+    "Git"           { Install-Git }
+    "Chocolatey"    { Install-Chocolatey }
+    "make"          { Install-ChocoPackage -AppName "make" -ChocoPackageName "make" }
+    "VSCode"        { Install-ChocoPackage -AppName "VSCode" -ChocoPackageName "vscode.install" }
+    "HWiNFO"        { Install-ChocoPackage -AppName "HWiNFO" -ChocoPackageName "hwinfo.install" }
+    "Discord"       { Install-ChocoPackage -AppName "Discord" -ChocoPackageName "discord.install" }
+    "Steam"         { Install-ChocoPackage -AppName "Steam" -ChocoPackageName "steam" }
+    "Valorant"      { Install-ChocoPackage -AppName "Valorant" -ChocoPackageName "valorant" }
+    "Windscribe"    { Install-ChocoPackage -AppName "Windscribe" -ChocoPackageName "windscribe" }
+    default {
+        Write-Host "Invalid Package Name: $PackageName"
+        exit 1
+    }
 }
-
-Write-Host "Cleaning up..."
-if (Test-Path $pythonInstallerPath) { Remove-Item -Path $pythonInstallerPath -Force }
-if (Test-Path $gitInstallerPath) { Remove-Item -Path $gitInstallerPath -Force }
-
-Write-Host "Installation process completed."

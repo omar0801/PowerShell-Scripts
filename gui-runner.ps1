@@ -15,10 +15,46 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "              Package Management:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Install Packages"
-    Write-Host "[2] Remove Chocolatey Packages"
+    Write-Host "[1] Install Python"
+    Write-Host "[2] Install Git"
+    Write-Host "[3] Install Chocolatey"
+    Write-Host "[4] Install make"
+    Write-Host "[5] Install VSCode"
+    Write-Host "[6] Install HWiNFO"
+    Write-Host "[7] Install Discord"
+    Write-Host "[8] Install Steam"
+    Write-Host "[9] Install Valorant"
+    Write-Host "[10] Install Windscribe"
     Write-Host "[0] Go Back"
     Write-Host "==============================================" -ForegroundColor Green
+}
+
+function Install-Package ($PackageName, $ScriptName) {
+    Write-Host "Installing $PackageName..."
+    Execute-Script $ScriptName
+}
+
+function Handle-PackageManagement {
+    $inPackageMenu = $true
+    while ($inPackageMenu) {
+        Show-PackageMenu
+        $packageChoice = Read-Host "Choose a package to install using your keyboard [1-10,0]"
+
+        switch ($packageChoice) {
+            1 { Install-Package "Python" "installs.ps1" }
+            2 { Install-Package "Git" "installs.ps1" }
+            3 { Install-Package "Chocolatey" "installs.ps1" }
+            4 { Install-Package "make" "installs.ps1" }
+            5 { Install-Package "VSCode" "installs.ps1" }
+            6 { Install-Package "HWiNFO" "installs.ps1" }
+            7 { Install-Package "Discord" "installs.ps1" }
+            8 { Install-Package "Steam" "installs.ps1" }
+            9 { Install-Package "Valorant" "installs.ps1" }
+            10 { Install-Package "Windscribe" "installs.ps1" }
+            0 { $inPackageMenu = $false }  # Exit Package Management submenu
+            default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
+        }
+    }
 }
 
 function Show-WSLMenu {
@@ -51,21 +87,7 @@ while ($true) {
     $choice = Read-Host "Choose a menu option using your keyboard [1,2,3,0]"
 
     switch ($choice) {
-        1 {
-            # Package Management Submenu
-            $inPackageMenu = $true
-            while ($inPackageMenu) {
-                Show-PackageMenu
-                $packageChoice = Read-Host "Choose a Package Management option using your keyboard [1,2,0]"
-
-                switch ($packageChoice) {
-                    1 { Execute-Script "installs.ps1" }
-                    2 { Execute-Script "choco_remove.ps1" }
-                    0 { $inPackageMenu = $false }  # Exit Package Management submenu
-                    default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
-                }
-            }
-        }
+        1 { Handle-PackageManagement }
         2 {
             # WSL Submenu
             $inWSLMenu = $true
