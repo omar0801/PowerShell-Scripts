@@ -10,7 +10,7 @@ function Show-Menu {
     Write-Host "[5] Install Packages"
     Write-Host "[6] Post-Restart Tasks for WSL"
     Write-Host "----------------------------------------------" -ForegroundColor Green
-    Write-Host "[0] Exit" -ForegroundColor Red
+    Write-Host "Press Ctrl+C to Exit" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -20,44 +20,25 @@ function Execute-Script ($ScriptName) {
     try {
         Write-Host "Executing $ScriptName..." -ForegroundColor Yellow
         Invoke-RestMethod -Uri $ScriptURL -OutFile "$env:TEMP\$ScriptName"
-        Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$env:TEMP\$ScriptName`""
+        PowerShell -ExecutionPolicy Bypass -File "$env:TEMP\$ScriptName"
     } catch {
         Write-Host "Error executing script `"$ScriptName`": $($_)" -ForegroundColor Red
     }
 }
 
-function Start-GUI {
-    $menuScript = @"
-while (\$true) {
+# Main Menu Loop
+while ($true) {
     Show-Menu
-    \$choice = Read-Host "Choose a menu option using your keyboard [1,2,3,4,5,6,0]"
+    $choice = Read-Host "Choose a menu option using your keyboard [1,2,3,4,5,6]"
 
-    switch (\$choice) {
+    switch ($choice) {
         1 { Execute-Script "choco_remove.ps1" }
         2 { Execute-Script "UninstallWSL.ps1" }
         3 { Execute-Script "Windows.ps1" }
         4 { Execute-Script "EnableWSL.ps1" }
         5 { Execute-Script "installs.ps1" }
         6 { Execute-Script "PostRestartWSL.ps1" }
-        0 { 
-            Write-Host "Exiting..." -ForegroundColor Red
-            break
-        }
         default { Write-Host "Invalid option. Please try again." -ForegroundColor Yellow }
     }
     Start-Sleep -Seconds 2
 }
-Write-Host "Press Enter to close this window..." -ForegroundColor Cyan
-Read-Host
-"@
-
-    # Save the menu script to a temporary file
-    $tempScriptPath = Join-Path $env:TEMP "MenuScript.ps1"
-    $menuScript | Set-Content -Path $tempScriptPath
-
-    # Open a new PowerShell window to run the GUI
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$tempScriptPath`""
-}
-
-# Start the GUI
-Start-GUI
