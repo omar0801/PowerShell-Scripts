@@ -1,4 +1,4 @@
-﻿# Function to check if Python is already installed
+# Function to check if Python is already installed
 function Check-Python {
     Write-Host "Checking if Python is installed..."
     $pythonExe = Get-Command python -ErrorAction SilentlyContinue
