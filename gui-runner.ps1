@@ -1,8 +1,6 @@
 function Show-Menu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "               Activation Methods:             " -ForegroundColor Cyan
-    Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1] Remove Chocolatey Packages"
     Write-Host "[2] Uninstall WSL"
     Write-Host "[3] Windows Configurations"
