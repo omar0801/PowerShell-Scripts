@@ -193,7 +193,6 @@ function Show-SystemMonitoringMenu {
     Write-Host "[2] CPU-Z"
     Write-Host "[3] GPU-Z"
     Write-Host "[4] Core Temp"
-    Write-Host "[5] Speccy"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
