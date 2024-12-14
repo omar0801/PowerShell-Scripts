@@ -1,4 +1,3 @@
-# Function to prompt for uninstallation
 function Prompt-Uninstall {
     param (
         [string]$SoftwareName
