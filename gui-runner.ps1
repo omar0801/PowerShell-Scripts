@@ -20,16 +20,15 @@ function Execute-Script ($ScriptName) {
     try {
         Write-Host "Executing $ScriptName..." -ForegroundColor Yellow
         Invoke-RestMethod -Uri $ScriptURL -OutFile "$env:TEMP\$ScriptName"
-        Start-Process -FilePath "powershell.exe" -ArgumentList "-ExecutionPolicy Bypass -File `"$env:TEMP\$ScriptName`""
+        Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$env:TEMP\$ScriptName`""
     } catch {
         Write-Host "Error executing script `"$ScriptName`": $($_)" -ForegroundColor Red
     }
 }
 
-# Main Menu Loop
 function Start-GUI {
     $menuScript = @"
-while ($true) {
+while (\$true) {
     Show-Menu
     \$choice = Read-Host "Choose a menu option using your keyboard [1,2,3,4,5,6,0]"
 
@@ -48,6 +47,8 @@ while ($true) {
     }
     Start-Sleep -Seconds 2
 }
+Write-Host "Press Enter to close this window..." -ForegroundColor Cyan
+Read-Host
 "@
 
     # Save the menu script to a temporary file
