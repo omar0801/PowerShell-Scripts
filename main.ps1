@@ -247,6 +247,7 @@ function Show-CommunicationGamingMenu {
     Write-Host "[1] Discord"
     Write-Host "[2] Steam"
     Write-Host "[3] Valorant"
+    Write-Host "[4] League of Legends"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -270,6 +271,11 @@ function Run-CommunicationGaming {
             3 {
                 Write-Host "Installing Valorant..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/valorant.ps1" | iex
+                Pause
+            }
+            4 {
+                Write-Host "Installing League of Legends..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/leagueoflegends.ps1" | iex
                 Pause
             }
             0 {
