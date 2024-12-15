@@ -17,5 +17,6 @@ try {
     Write-Host "An error occurred while executing the script: $_" -ForegroundColor Red
 }
 
-# Prevent any new terminal or console pop-ups
-exit
+# Return to the main menu instead of exiting the session
+# Replace this with the function or logic that displays the main menu
+Show-MainMenu
