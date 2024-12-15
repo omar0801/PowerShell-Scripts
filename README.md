@@ -2,12 +2,6 @@
 
 This repository contains a collection of PowerShell scripts designed to automate and simplify various tasks on Windows systems.
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Usage](#usage)
-- [Prerequisites](#prerequisites)
-
 ## Overview
 
 These scripts provide automation for tasks such as managing software installations, configuring tools, and optimizing workflows. Each script is tailored to handle a specific application or functionality.
