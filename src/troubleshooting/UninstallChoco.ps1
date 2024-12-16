@@ -1,13 +1,3 @@
-# Function to prompt for uninstallation
-function Prompt-Uninstall {
-    param (
-        [string]$SoftwareName
-    )
-
-    $response = Read-Host ("Do you want to uninstall `"$SoftwareName`"? (yes/no)")
-    return $response -eq "yes"
-}
-
 # Prompt for Chocolatey uninstallation
 if (Prompt-Uninstall -SoftwareName "Chocolatey") {
     # Uninstall all Chocolatey packages (optional)
