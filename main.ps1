@@ -1,4 +1,4 @@
-﻿# Main GUI Menu Script
+# Main GUI Menu Script
 function Show-Menu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
