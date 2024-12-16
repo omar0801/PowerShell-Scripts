@@ -311,6 +311,7 @@ function Show-TroubleshootingMenu {
     Write-Host "[2] Check Disk Health" -ForegroundColor Yellow
     Write-Host "[3] Repair System Files (SFC Scan)" -ForegroundColor Cyan
     Write-Host "[4] Clean Temporary Files" -ForegroundColor Magenta
+    Write-Host "[5] Uninstall Chocolatey (Warning: Removes all Chocolatey-installed apps)" -ForegroundColor Green
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -345,6 +346,19 @@ function Clean-TempFiles {
     Pause
 }
 
+function Uninstall-Chocolatey {
+    Write-Host "WARNING: This will uninstall Chocolatey and all apps installed through it." -ForegroundColor Red
+    $confirmation = Read-Host "Are you sure you want to proceed? (yes/no)"
+    if ($confirmation -eq "yes") {
+        Write-Host "Uninstalling Chocolatey..." -ForegroundColor Cyan
+        irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/troubleshooting/UninstallChoco.ps1" | iex
+        Write-Host "Chocolatey has been uninstalled." -ForegroundColor Green
+    } else {
+        Write-Host "Operation canceled." -ForegroundColor Yellow
+    }
+    Pause
+}
+
 # Troubleshooting Menu Logic
 function Run-Troubleshooting {
     do {
@@ -362,6 +376,9 @@ function Run-Troubleshooting {
             }
             4 {
                 Clean-TempFiles
+            }
+            5 {
+                Uninstall-Chocolatey
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
