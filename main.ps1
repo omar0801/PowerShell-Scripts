@@ -5,9 +5,9 @@ function Show-Menu {
     Write-Host "          System Configuration Menu:          " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1]📦 Package Management" -ForegroundColor Blue
-    Write-Host "[2] WSL (Enable/Configure/Uninstall)" -ForegroundColor Yellow
-    Write-Host "[3] Windows Configurations" -ForegroundColor Cyan
-    Write-Host "[0] Exit" -ForegroundColor Red
+    Write-Host "[2]🐧 WSL (Enable/Configure/Uninstall)" -ForegroundColor Yellow
+    Write-Host "[3]⚙️  Windows Configurations" -ForegroundColor Cyan
+    Write-Host "[0]❌ Exit" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -20,10 +20,10 @@ function Show-WSLMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "               WSL Configuration Menu:        " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Enable WSL"
-    Write-Host "[2] Post-Restart Configuration"
-    Write-Host "[3] Uninstall WSL"
-    Write-Host "[0] Back to Main Menu" -ForegroundColor Red
+    Write-Host "[1]🟢 Enable WSL"
+    Write-Host "[2]🔄 Post-Restart Configuration"
+    Write-Host "[3]🔴 Uninstall WSL"
+    Write-Host "[0]🔙 Back to Main Menu" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -83,10 +83,10 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "              Package Management:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Development Tools" -ForegroundColor Blue
-    Write-Host "[2] System Monitoring Tools" -ForegroundColor Yellow
-    Write-Host "[3] Communication and Gaming" -ForegroundColor Cyan
-    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "[1]💻 Development Tools" -ForegroundColor Blue
+    Write-Host "[2]🖥️  System Monitoring Tools" -ForegroundColor Yellow
+    Write-Host "[3]🎮 Communication and Gaming" -ForegroundColor Cyan
+    Write-Host "[0]🔙 Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -128,12 +128,12 @@ function Show-DevelopmentToolsMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "              Development Tools:               " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Python"
-    Write-Host "[2] Git"
-    Write-Host "[3] VSCode"
-    Write-Host "[4] Make"
-    Write-Host "[5] Tree"
-    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "[1]🐍 Python"
+    Write-Host "[2]🖋️  Git"
+    Write-Host "[3]📄 VSCode"
+    Write-Host "[4]🛠️  Make"
+    Write-Host "[5]🌳 Tree"
+    Write-Host "[0]🔙 Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -189,11 +189,11 @@ function Show-SystemMonitoringMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "         System Monitoring Tools:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] HWiNFO"
-    Write-Host "[2] CPU-Z"
-    Write-Host "[3] GPU-Z"
-    Write-Host "[4] Core Temp"
-    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "[1]🛠️  HWiNFO"
+    Write-Host "[2]⚙️  CPU-Z"
+    Write-Host "[3]🖥️  GPU-Z"
+    Write-Host "[4]🌡️  Core Temp"
+    Write-Host "[0]🔙 Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
@@ -244,11 +244,11 @@ function Show-CommunicationGamingMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "        Communication and Gaming:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Discord"
-    Write-Host "[2] Steam"
-    Write-Host "[3] Valorant"
+    Write-Host "[1]🎙️  Discord"
+    Write-Host "[2]🛍️  Steam"
+    Write-Host "[3]🎯 Valorant"
     Write-Host "[4] League of Legends"
-    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "[0]🔙 Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
 
