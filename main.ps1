@@ -1,10 +1,10 @@
-# Main GUI Menu Script
+﻿# Main GUI Menu Script
 function Show-Menu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "          System Configuration Menu:          " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] Package Management" -ForegroundColor Blue
+    Write-Host "[1]📦 Package Management" -ForegroundColor Blue
     Write-Host "[2] WSL (Enable/Configure/Uninstall)" -ForegroundColor Yellow
     Write-Host "[3] Windows Configurations" -ForegroundColor Cyan
     Write-Host "[0] Exit" -ForegroundColor Red
