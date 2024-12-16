@@ -7,6 +7,7 @@ function Show-Menu {
     Write-Host "[1] Package Management" -ForegroundColor Blue
     Write-Host "[2] WSL (Enable/Configure/Uninstall)" -ForegroundColor Yellow
     Write-Host "[3] Windows Configurations" -ForegroundColor Cyan
+    Write-Host "[4] Troubleshooting" -ForegroundColor Magenta
     Write-Host "[0] Exit" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -299,6 +300,83 @@ function Run-WindowsConfigurations {
 }
 
 # ==========================================================
+# SECTION: Troubleshooting Menu
+# ==========================================================
+function Show-TroubleshootingMenu {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "              Troubleshooting Menu:            " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] Reset Network Configuration" -ForegroundColor Blue
+    Write-Host "[2] Check Disk Health" -ForegroundColor Yellow
+    Write-Host "[3] Repair System Files (SFC Scan)" -ForegroundColor Cyan
+    Write-Host "[4] Clean Temporary Files" -ForegroundColor Magenta
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
+}
+
+# Functions for Troubleshooting Options
+function Reset-Network {
+    Write-Host "Resetting Network Configuration..." -ForegroundColor Cyan
+    netsh winsock reset
+    netsh int ip reset
+    Write-Host "Network Configuration Reset Complete. Please restart your system if necessary." -ForegroundColor Green
+    Pause
+}
+
+function Check-DiskHealth {
+    Write-Host "Running Disk Health Check..." -ForegroundColor Cyan
+    chkdsk C: /f /r
+    Write-Host "Disk Health Check initiated. It may require a system reboot to complete." -ForegroundColor Green
+    Pause
+}
+
+function Repair-SystemFiles {
+    Write-Host "Starting System File Checker (SFC) Scan..." -ForegroundColor Cyan
+    sfc /scannow
+    Write-Host "System File Checker Scan Complete." -ForegroundColor Green
+    Pause
+}
+
+function Clean-TempFiles {
+    Write-Host "Cleaning Temporary Files..." -ForegroundColor Cyan
+    Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+    Write-Host "Temporary Files Cleaned Successfully." -ForegroundColor Green
+    Pause
+}
+
+# Troubleshooting Menu Logic
+function Run-Troubleshooting {
+    do {
+        Show-TroubleshootingMenu
+        $troubleSelection = Read-Host "Please select an option"
+        switch ($troubleSelection) {
+            1 {
+                Reset-Network
+            }
+            2 {
+                Check-DiskHealth
+            }
+            3 {
+                Repair-SystemFiles
+            }
+            4 {
+                Clean-TempFiles
+            }
+            0 {
+                Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($troubleSelection -ne 0)
+}
+
+
+# ==========================================================
 # SECTION: Main Menu Logic
 # ==========================================================
 do {
@@ -313,6 +391,9 @@ do {
         }
         3 {
             Run-WindowsConfigurations
+        }
+        4 {
+            Run-Troubleshooting
         }
         0 {
             Write-Host "Exiting... Goodbye and shush!" -ForegroundColor Red
