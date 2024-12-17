@@ -345,12 +345,18 @@ function Clean-TempFiles {
     Write-Host "Temporary Files Cleaned Successfully." -ForegroundColor Green
     Pause
 }
-
 function Uninstall-Chocolatey {
-    Write-Host "Running Uninstall Chocolatey Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/troubleshooting/UninstallChoco.ps1" | iex
+    Write-Host "WARNING: This will uninstall Chocolatey and all apps installed through it." -ForegroundColor Red
+    $confirmation = Read-Host "Are you sure you want to proceed? (yes/no)"
+    if ($confirmation -eq "yes") {
+        Write-Host "Uninstalling Chocolatey..." -ForegroundColor Cyan
+        irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/troubleshooting/UninstallChoco.ps1" | iex
+        Write-Host "Chocolatey has been uninstalled." -ForegroundColor Green
+    } else {
+        Write-Host "Operation canceled." -ForegroundColor Yellow
+    }
+    Pause
 }
-
 # Troubleshooting Menu Logic
 function Run-Troubleshooting {
     do {
