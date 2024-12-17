@@ -24,5 +24,7 @@ function Uninstall-Chocolatey {
     } else {
         Write-Host "Chocolatey removal failed. Please check manually." -ForegroundColor Red
     }
-    Pause
 }
+
+# Run the function immediately
+Uninstall-Chocolatey
