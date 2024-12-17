@@ -311,10 +311,13 @@ function Show-TroubleshootingMenu {
     Write-Host "[2] Check Disk Health" -ForegroundColor Yellow
     Write-Host "[3] Repair System Files (SFC Scan)" -ForegroundColor Cyan
     Write-Host "[4] Clean Temporary Files" -ForegroundColor Magenta
-    Write-Host "[5] Uninstall Chocolatey (Warning: Removes all Chocolatey-installed apps)" -ForegroundColor Green
+    Write-Host "[5] Uninstall Chocolatey (" -ForegroundColor Green -NoNewline
+    Write-Host "Warning: Removes all Chocolatey-installed apps" -ForegroundColor Red -NoNewline
+    Write-Host ")" -ForegroundColor Green
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
+
 
 # Functions for Troubleshooting Options
 function Reset-Network {
