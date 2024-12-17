@@ -1,5 +1,4 @@
 function Uninstall-Chocolatey {
-    Write-Host "WARNING: This will uninstall Chocolatey and all apps installed through it." -ForegroundColor Red
     Write-Host "Uninstalling all Chocolatey packages..."
     choco uninstall all -y
 
