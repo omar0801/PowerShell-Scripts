@@ -339,7 +339,7 @@ function Run-Benchmarking {
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/heavenbenchmark.ps1" | iex
                 Pause
             }
-            3 {
+            4 {
                 Write-Host "Installing Heaven CrystalDiskMark..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskmark.ps1" | iex
                 Pause
