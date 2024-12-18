@@ -304,6 +304,8 @@ function Show-Benchmarking {
     Write-Host "                Benchmarking:                 " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1] Cinebench"
+    Write-Host "[2] Occt"
+    Write-Host "[3] Heaven Benchmark"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -318,6 +320,16 @@ function Run-Benchmarking {
             1 {
                 Write-Host "Installing Cinebench..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/cinebench.ps1" | iex
+                Pause
+            }
+            2 {
+                Write-Host "Installing Occt..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/occt.ps1" | iex
+                Pause
+            }
+            3 {
+                Write-Host "Installing Heaven Benchmark..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/heavenbenchmark.ps1" | iex
                 Pause
             }
             0 {
