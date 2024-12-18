@@ -87,6 +87,7 @@ function Show-PackageMenu {
     Write-Host "[1] Development Tools" -ForegroundColor Blue
     Write-Host "[2] System Monitoring Tools" -ForegroundColor Yellow
     Write-Host "[3] Communication and Gaming" -ForegroundColor Cyan
+    Write-Host "[4] Bnechmarking" -ForegroundColor Magenta
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -107,6 +108,9 @@ function Run-PackageManagement {
             }
             3 {
                 Run-CommunicationGaming
+            }
+            4 {
+                Run-Bnechmarking
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
@@ -290,14 +294,43 @@ function Run-CommunicationGaming {
         }
     } while ($selection -ne 0)
 }
-
 # ==========================================================
-# SECTION: Windows Configurations
+# SECTION: Communication and Gaming Menu
 # ==========================================================
-function Run-WindowsConfigurations {
-    Write-Host "Running Windows Configurations..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/microsoft/Windows.ps1" | iex
+# Function to Display Communication and Gaming Menu
+function Show-Benchmarking {
+    cls
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "                Benchmarking:                 " -ForegroundColor Cyan
+    Write-Host "==============================================" -ForegroundColor Green
+    Write-Host "[1] Cinebench"
+    Write-Host "[0] Go Back" -ForegroundColor Red
+    Write-Host "==============================================" -ForegroundColor Green
 }
+
+# Logic for Communication and Gaming Menu
+function Run-Benchmarking {
+    do {
+        Show-Benchmarking
+        $selection = Read-Host "Please select an option"
+        switch ($selection) {
+            1 {
+                Write-Host "Installing Cinebench..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/cinebench.ps1" | iex
+                Pause
+            }
+            0 {
+                Write-Host "Returning to Package Management Menu..." -ForegroundColor Yellow
+                break
+            }
+            default {
+                Write-Host "Invalid selection, please try again." -ForegroundColor Red
+                Pause
+            }
+        }
+    } while ($selection -ne 0)
+}
+
 
 # ==========================================================
 # SECTION: Troubleshooting Menu
@@ -393,6 +426,14 @@ function Run-Troubleshooting {
     } while ($troubleSelection -ne 0)
 }
 
+
+# ==========================================================
+# SECTION: Windows Configurations
+# ==========================================================
+function Run-WindowsConfigurations {
+    Write-Host "Running Windows Configurations..." -ForegroundColor Cyan
+    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/microsoft/Windows.ps1" | iex
+}
 
 # ==========================================================
 # SECTION: Main Menu Logic
