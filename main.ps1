@@ -86,8 +86,8 @@ function Show-PackageMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "[1] Development Tools" -ForegroundColor Blue
     Write-Host "[2] System Monitoring Tools" -ForegroundColor Yellow
-    Write-Host "[3] Communication and Gaming" -ForegroundColor Cyan
-    Write-Host "[4] Benchmarking" -ForegroundColor Magenta
+    Write-Host "[3] Benchmarking" -ForegroundColor Cyan
+    Write-Host "[4] Communication and Gaming" -ForegroundColor Magenta
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -107,10 +107,10 @@ function Run-PackageManagement {
                 Run-SystemMonitoring
             }
             3 {
-                Run-CommunicationGaming
+                Run-Benchmarking
             }
             4 {
-                Run-Benchmarking
+                Run-CommunicationGaming
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
@@ -198,6 +198,7 @@ function Show-SystemMonitoringMenu {
     Write-Host "[2] CPU-Z"
     Write-Host "[3] GPU-Z"
     Write-Host "[4] Core Temp"
+    Write-Host "[5] CrystalDiskInfo"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -226,6 +227,11 @@ function Run-SystemMonitoring {
             4 {
                 Write-Host "Installing Core Temp..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/coretemp.ps1" | iex
+                Pause
+            }
+            5 {
+                Write-Host "Installing CrystalDiskInfo Temp..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskinfo.ps1" | iex
                 Pause
             }
             0 {
@@ -306,6 +312,7 @@ function Show-Benchmarking {
     Write-Host "[1] Cinebench"
     Write-Host "[2] Occt"
     Write-Host "[3] Heaven Benchmark"
+    Write-Host "[4] CrystalDiskMark"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -330,6 +337,11 @@ function Run-Benchmarking {
             3 {
                 Write-Host "Installing Heaven Benchmark..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/heavenbenchmark.ps1" | iex
+                Pause
+            }
+            3 {
+                Write-Host "Installing Heaven CrystalDiskMark..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskmark.ps1" | iex
                 Pause
             }
             0 {
