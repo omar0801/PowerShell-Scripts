@@ -87,7 +87,7 @@ function Show-PackageMenu {
     Write-Host "[1] Development Tools" -ForegroundColor Blue
     Write-Host "[2] System Monitoring Tools" -ForegroundColor Yellow
     Write-Host "[3] Communication and Gaming" -ForegroundColor Cyan
-    Write-Host "[4] Bnechmarking" -ForegroundColor Magenta
+    Write-Host "[4] Benchmarking" -ForegroundColor Magenta
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
