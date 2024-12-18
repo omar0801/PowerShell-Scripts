@@ -110,7 +110,7 @@ function Run-PackageManagement {
                 Run-CommunicationGaming
             }
             4 {
-                Run-Bnechmarking
+                Run-Benchmarking
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
