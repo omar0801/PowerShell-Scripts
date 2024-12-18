@@ -295,9 +295,9 @@ function Run-CommunicationGaming {
     } while ($selection -ne 0)
 }
 # ==========================================================
-# SECTION: Communication and Gaming Menu
+# SECTION: Benchmarking Menu
 # ==========================================================
-# Function to Display Communication and Gaming Menu
+# Function to Display Benchmarking Menu
 function Show-Benchmarking {
     cls
     Write-Host "==============================================" -ForegroundColor Green
@@ -307,6 +307,7 @@ function Show-Benchmarking {
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
+
 
 # Logic for Communication and Gaming Menu
 function Run-Benchmarking {
