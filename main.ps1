@@ -194,11 +194,12 @@ function Show-SystemMonitoringMenu {
     Write-Host "==============================================" -ForegroundColor Green
     Write-Host "         System Monitoring Tools:              " -ForegroundColor Cyan
     Write-Host "==============================================" -ForegroundColor Green
-    Write-Host "[1] HWiNFO"
-    Write-Host "[2] CPU-Z"
-    Write-Host "[3] GPU-Z"
-    Write-Host "[4] Core Temp"
-    Write-Host "[5] CrystalDiskInfo"
+    Write-Host "[1] NZXT CAM" -ForegroundColor Magenta
+    Write-Host "[2] HWiNFO"
+    Write-Host "[3] CPU-Z"
+    Write-Host "[4] GPU-Z"
+    Write-Host "[5] Core Temp"
+    Write-Host "[6] CrystalDiskInfo"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -210,26 +211,31 @@ function Run-SystemMonitoring {
         $selection = Read-Host "Please select an option"
         switch ($selection) {
             1 {
+                Write-Host "Installing NZXT CAM..."
+                irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/nzxt.ps1" | iex
+                Pause
+            }
+            2 {
                 Write-Host "Installing HWiNFO..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/hwinfo.ps1" | iex
                 Pause
             }
-            2 {
+            3 {
                 Write-Host "Installing CPU-Z..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/cpu-z.ps1" | iex
                 Pause
             }
-            3 {
+            4 {
                 Write-Host "Installing GPU-Z..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/gpu-z.ps1" | iex
                 Pause
             }
-            4 {
+            5 {
                 Write-Host "Installing Core Temp..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/coretemp.ps1" | iex
                 Pause
             }
-            5 {
+            6 {
                 Write-Host "Installing CrystalDiskInfo Temp..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskinfo.ps1" | iex
                 Pause
