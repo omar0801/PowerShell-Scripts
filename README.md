@@ -3,6 +3,3 @@
 ```ps1
 irm https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/main.ps1 | iex
 ```
-3. shush (posi only)
-4. pat is our queen
-
