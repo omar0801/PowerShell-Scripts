@@ -486,7 +486,7 @@ do {
             Run-Troubleshooting
         }
         0 {
-            Write-Host "Exiting... Goodbye and shush!" -ForegroundColor Red
+            Write-Host "Exiting... Goodbye!" -ForegroundColor Red
             break
         }
         default {
