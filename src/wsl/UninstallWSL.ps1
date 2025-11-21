@@ -56,11 +56,12 @@ if (Prompt-Action -ActionDescription "uninstall WSL and related features") {
 
     # Remove any WSL installation cache files
     $wslCachePath = "C:\Program Files\WindowsApps"
-    $wslCacheFiles = Get-ChildItem -Path $wslCachePath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.Name -match "WSL" }
+    $wslCacheFiles = Get-ChildItem -Path $wslCachePath -Recurse -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -like "wsl.exe" -or $_.FullName -like "*WindowsSubsystemForLinux*" }
     foreach ($file in $wslCacheFiles) {
-        Remove-Item -Path $file.FullName -Force -Recurse
-        Write-Host "Removed cache file: $($file.FullName)" -ForegroundColor Green
+        Remove-Item -Path $file.FullName -Force -Recurse -ErrorAction SilentlyContinue
     }
+
 
     # Final step: Restart the computer
     Write-Host "Uninstallation complete. Please restart your computer to finalize changes." -ForegroundColor Green
