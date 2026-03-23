@@ -1,26 +1,20 @@
-# Function to prompt for enabling features
-function Prompt-EnableFeatures {
-    param (
-        [string]$FeatureDescription
-    )
+# Enable WSL and Virtual Machine Platform features
+Write-Host "Enabling WSL and Virtual Machine Platform features..." -ForegroundColor Green
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
 
-    $response = Read-Host ("Do you want to enable `"$FeatureDescription`"? (yes/no)")
-    return $response -eq "yes"
-}
+# Set a marker file to indicate the first part has run
+$markerPath = "$env:USERPROFILE\.wsl-setup-marker"
+Set-Content -Path $markerPath -Value "WSL Features Enabled"
 
-# Prompt for enabling WSL and Virtual Machine Platform features
-if (Prompt-EnableFeatures -FeatureDescription "WSL and Virtual Machine Platform features") {
-    Write-Host "Enabling WSL and Virtual Machine Platform features..." -ForegroundColor Green
-    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
-    Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart
-
-    # Set a marker file to indicate the first part has run
-    $markerPath = "$env:Temp\WSLInstalled.txt"
-    Set-Content -Path $markerPath -Value "WSL Features Enabled"
-
-    # Restart the system
-    Write-Host "Restarting the system to apply changes..." -ForegroundColor Yellow
+# Prompt before restarting
+Write-Host ""
+Write-Host "WSL features have been enabled. A restart is required to apply changes." -ForegroundColor Yellow
+$response = Read-Host "Do you want to restart now? (yes/no)"
+if ($response -eq "yes") {
+    Write-Host "Restarting in 10 seconds... Save your work!" -ForegroundColor Red
+    Start-Sleep -Seconds 10
     Restart-Computer -Force
 } else {
-    Write-Host "WSL and Virtual Machine Platform feature enablement skipped."
+    Write-Host "Please restart your computer manually before running the Post-Restart Configuration." -ForegroundColor Yellow
 }

@@ -31,17 +31,34 @@ function Show-WSLMenu {
 # Functions for WSL Options
 function Enable-WSL {
     Write-Host "Running Enable WSL Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/EnableWSL.ps1" | iex
+    try {
+        irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/EnableWSL.ps1" | iex
+    } catch {
+        Write-Host "Failed to fetch or run EnableWSL script: $_" -ForegroundColor Red
+    }
 }
 
 function Post-RestartWSL {
     Write-Host "Running Post-Restart Configuration Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/PostRestartWSL.ps1" | iex
+    try {
+        irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/PostRestartWSL.ps1" | iex
+    } catch {
+        Write-Host "Failed to fetch or run PostRestartWSL script: $_" -ForegroundColor Red
+    }
 }
 
 function Uninstall-WSL {
+    $confirmation = Read-Host "WARNING: This will uninstall WSL and all distributions. Proceed? (yes/no)"
+    if ($confirmation -ne "yes") {
+        Write-Host "WSL uninstallation cancelled." -ForegroundColor Yellow
+        return
+    }
     Write-Host "Running Uninstall WSL Script directly from GitHub..." -ForegroundColor Cyan
-    irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/UninstallWSL.ps1" | iex
+    try {
+        irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/wsl/UninstallWSL.ps1" | iex
+    } catch {
+        Write-Host "Failed to fetch or run UninstallWSL script: $_" -ForegroundColor Red
+    }
 }
 
 # WSL Menu Logic
