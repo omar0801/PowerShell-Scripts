@@ -11,7 +11,7 @@ function Install-Python {
         # Find the correct link for the Python installer
         $pythonInstallerUrl = ($pythonDownloadPage.Links | Where-Object {
             $_.href -match "https://www.python.org/ftp/python/.+/python-.+-amd64.exe"
-        }).href
+        } | Select-Object -First 1).href
 
         if (-not $pythonInstallerUrl) {
             Write-Error "Failed to fetch the latest Python installer URL."

@@ -1,4 +1,11 @@
 # Main GUI Menu Script
+
+# Require Administrator privileges
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "This script must be run as Administrator. Please re-launch PowerShell as Administrator." -ForegroundColor Red
+    exit 1
+}
+
 function Show-Menu {
     cls
     Write-Host "==============================================" -ForegroundColor Green
@@ -236,7 +243,7 @@ function Run-SystemMonitoring {
                 Pause
             }
             6 {
-                Write-Host "Installing CrystalDiskInfo Temp..."
+                Write-Host "Installing CrystalDiskInfo..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskinfo.ps1" | iex
                 Pause
             }
@@ -324,7 +331,7 @@ function Show-Benchmarking {
 }
 
 
-# Logic for Communication and Gaming Menu
+# Logic for Benchmarking Menu
 function Run-Benchmarking {
     do {
         Show-Benchmarking
@@ -346,7 +353,7 @@ function Run-Benchmarking {
                 Pause
             }
             4 {
-                Write-Host "Installing Heaven CrystalDiskMark..."
+                Write-Host "Installing CrystalDiskMark..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskmark.ps1" | iex
                 Pause
             }
