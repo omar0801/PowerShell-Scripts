@@ -378,6 +378,7 @@ function Show-TroubleshootingMenu {
     Write-Host "[5] Uninstall Chocolatey (" -ForegroundColor Green -NoNewline
     Write-Host "Warning: Removes all Chocolatey-installed apps" -ForegroundColor Red -NoNewline
     Write-Host ")" -ForegroundColor Green
+    Write-Host "[6] USB Latency Analyzer" -ForegroundColor Blue
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -424,6 +425,12 @@ function Uninstall-Chocolatey {
     }
     Pause
 }
+
+function Analyze-USBLatency {
+    Write-Host "Running USB Latency Analyzer..." -ForegroundColor Cyan
+    irm "https://tools.mariusheier.com/cpudirect.ps1" | iex
+    Pause
+}
 # Troubleshooting Menu Logic
 function Run-Troubleshooting {
     do {
@@ -444,6 +451,9 @@ function Run-Troubleshooting {
             }
             5 {
                 Uninstall-Chocolatey
+            }
+            6 {
+                Analyze-USBLatency
             }
             0 {
                 Write-Host "Returning to Main Menu..." -ForegroundColor Yellow
