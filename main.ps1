@@ -319,6 +319,7 @@ function Show-Benchmarking {
     Write-Host "[2] Occt"
     Write-Host "[3] Heaven Benchmark"
     Write-Host "[4] CrystalDiskMark"
+    Write-Host "[5] CPU Direct Benchmark"
     Write-Host "[0] Go Back" -ForegroundColor Red
     Write-Host "==============================================" -ForegroundColor Green
 }
@@ -348,6 +349,11 @@ function Run-Benchmarking {
             4 {
                 Write-Host "Installing Heaven CrystalDiskMark..."
                 irm "https://raw.githubusercontent.com/omar0801/PowerShell-Scripts/refs/heads/main/src/choco-installs/crystaldiskmark.ps1" | iex
+                Pause
+            }
+            5 {
+                Write-Host "Running CPU Direct Benchmark..."
+                irm "https://tools.mariusheier.com/cpudirect.ps1" | iex
                 Pause
             }
             0 {
