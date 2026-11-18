@@ -12,9 +12,14 @@ function Uninstall-Chocolatey {
     }
 
     Write-Host "Removing Chocolatey from PATH..."
+    $chocoBin = "$chocoPath\bin"
     $envPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
-    $newPath = $envPath -replace [regex]::Escape("C:\\ProgramData\\chocolatey\\bin;"), ""
+    # Split PATH into entries and drop the Chocolatey one; this works wherever it sits
+    # (including last, with no trailing ';') and with or without a trailing '\'
+    $newPath = ($envPath -split ';' | Where-Object { $_ -and $_.TrimEnd('\') -ne $chocoBin }) -join ';'
     [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+    # Also update the current session so the verification below sees the change
+    $env:Path = ($env:Path -split ';' | Where-Object { $_ -and $_.TrimEnd('\') -ne $chocoBin }) -join ';'
     Write-Host "Chocolatey removed from PATH." -ForegroundColor Green
 
     Write-Host "Verifying Chocolatey removal..."

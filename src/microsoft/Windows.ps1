@@ -17,6 +17,4 @@ try {
     Write-Host "An error occurred while executing the script: $_" -ForegroundColor Red
 }
 
-# Return to the main menu instead of exiting the session
-# Replace this with the function or logic that displays the main menu
-Show-MainMenu
+# No need to redraw the menu here: control returns to the main menu loop in main.ps1
